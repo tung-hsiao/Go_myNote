@@ -12,4 +12,16 @@ sudo mv go /usr/local
 
 # 最後是設定環境變數，在~/.profile加入以下內容
 export PATH=$PATH:/usr/local/go/bin
+
+# 測試環境是否正常，新增一個 main.go檔案 
+
+package main
+import "fmt"
+func main() {
+	fmt.Println("Hello, world")
+}
+
+接下來在terminal執行
+go run main.go
+
 ```
