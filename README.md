@@ -1,8 +1,7 @@
 # Go_myNote
 
 
-在 Linux 安裝 go
-
+## 在 Linux 安裝 go
 ```
 從官網下載壓縮檔
 
@@ -26,7 +25,19 @@ go run main.go
 
 ```
 
-Import third-party套件
+## Build & Run
+```
+# create go.mod
+go mod init PROJECT_NAME
+
+# create  executable
+go build
+
+# run executable
+go run PROJECT_NAME
+```
+
+## Import third-party套件
 ```
 go get "github.com/gofiber/fiber/v2"
 ```
