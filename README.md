@@ -21,7 +21,14 @@ func main() {
 	fmt.Println("Hello, world")
 }
 
-接下來在terminal執行
+# 接下來在terminal執行
 go run main.go
 
 ```
+
+Import third-party套件
+```
+go get "github.com/gofiber/fiber/v2"
+```
+
+
