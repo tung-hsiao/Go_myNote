@@ -67,7 +67,9 @@ func main() {
 }
 ```
 run this Go program, and visit http://localhost:3000 in your browser
-
+```
+go run .
+```
 
 ## How to kill the server when failed to listen: address already in use
 ```
