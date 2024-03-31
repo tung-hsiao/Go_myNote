@@ -1,6 +1,5 @@
 # Go_myNote
 
-
 ## 在 Linux 安裝 go
 ```
 從官網下載壓縮檔
@@ -25,21 +24,58 @@ go run main.go
 
 ```
 
-## Build & Run
+## Start a Fiber project
+
+Create a new directory for your project
 ```
-# create go.mod
-go mod init PROJECT_NAME
-
-# create  executable
-go build
-
-# run executable
-go run PROJECT_NAME
+mkdir Project_Name
+cd Project_Name
 ```
 
-## Import third-party套件
+initialize your project with Go modules by executing the following command in your terminal
 ```
-go get "github.com/gofiber/fiber/v2"
+go mod init github.com/your/repo
+```
+
+After setting up your project, you can install Fiber with the go get command:
+```
+go get -u github.com/gofiber/fiber/v3
+```
+
+Here's a basic example to create a simple web server that responds with "Hello, World 👋!" on the root path.
+```
+package main
+
+import (
+    "log"
+
+    "github.com/gofiber/fiber/v3"
+)
+
+func main() {
+    // Initialize a new Fiber app
+    app := fiber.New()
+
+    // Define a route for the GET method on the root path '/'
+    app.Get("/", func(c fiber.Ctx) error {
+        // Send a string response to the client
+        return c.SendString("Hello, World 👋!")
+    })
+
+    // Start the server on port 3000
+    log.Fatal(app.Listen(":3000"))
+}
+```
+run this Go program, and visit http://localhost:3000 in your browser
+
+
+## How to kill the server when failed to listen: address already in use
+```
+# check the port
+lsof -i :3000
+
+# kill PID
+kill xxxx
 ```
 
 
