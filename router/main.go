@@ -1,41 +1,48 @@
 package main
 
 import (
-    "log"
-
-    "github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/middleware/compress"
-	"github.com/gofiber/fiber/v3/middleware/cors"
-	"github.com/gofiber/fiber/v3/middleware/logger"
+    "github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 var httpApplication *fiber.App
-const (bodyLimit = 100 * 1024 * 1024) // 上傳大小限制100MB
 
+const (
+	bodyLimit = 100 * 1024 * 1024 // 上傳大小限制100MB
+)
+
+var Prefork = false // 多線程
+var localServer = ""
+
+// 監聽網頁服務
 func main() {
-    // Initialize a new Fiber app
-    httpApplication = fiber.New(fiber.Config{BodyLimit: bodyLimit})
-    httpApplication.Use(compress.New()) // 啟用壓縮
-    httpApplication.Use(cors.New())   // 啟用CORS
-    httpApplication.Use(logger.New()) // 啟用日誌
-
-    addRoute_HelloWorld()
-    addRoute_TungTest()
-
-    // Start the server on port 3000
-    log.Fatal(httpApplication.Listen(":3000"))
+	httpApplication = fiber.New(fiber.Config{Prefork: Prefork, BodyLimit: bodyLimit, UnescapePath: true})
+	setupRoute()
+    httpApplication.Listen(":3000")
 }
 
-func addRoute_HelloWorld(){
-    // Define a route for the GET method on the root path '/'
-    httpApplication.Get("/", func(c fiber.Ctx) error {
-        return c.SendString("Hello, World 👋!") // Send a string response to the client
-    })
+// 設定路由
+func setupRoute() {
+	httpApplication.Use(compress.New()) // 啟用壓縮
+	httpApplication.Use(cors.New())   // 啟用CORS
+	httpApplication.Use(logger.New()) // 啟用日誌
+
+    // API 路徑
+	apiGroup := httpApplication.Group("")
+
+    apiGroup.Get("/", helloWorld)
+    apiGroup.Get("/hello/:name", helloName)
+
 }
 
-func addRoute_TungTest(){
-    // Define a route for the GET method on the root path '/'
-    httpApplication.Get("/tung", func(c fiber.Ctx) error {
-        return c.SendString("Tung Test!") // Send a string response to the client
-    })
+func helloWorld(context *fiber.Ctx) error {
+    return context.Status(200).JSON(fiber.Map{"Message": "Hello Word"})
+}
+
+// Define a route with dynamic parameter
+func helloName(context *fiber.Ctx) error {
+    name := context.Params("name")
+    return context.SendString("Hello, " + name + "!")
 }
