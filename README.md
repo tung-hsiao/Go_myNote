@@ -39,7 +39,7 @@ go mod init github.com/your/repo
 
 After setting up your project, you can install Fiber with the go get command:
 ```
-go get -u github.com/gofiber/fiber/v3
+go get -u github.com/gofiber/fiber/v2
 ```
 
 Here's a basic example to create a simple web server that responds with "Hello, World 👋!" on the root path.
@@ -49,7 +49,7 @@ package main
 import (
     "log"
 
-    "github.com/gofiber/fiber/v3"
+    "github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 ```
 run this Go program, and visit http://localhost:3000 in your browser
 ```
-go run .
+go run main.go
 ```
 
 ## How to kill the server when failed to listen: address already in use
